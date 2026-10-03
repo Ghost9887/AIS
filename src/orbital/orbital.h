@@ -10,6 +10,7 @@ public:
     ~Orbital();
 
     void PowerOn();
+    void Run();
     void ShutDown();
 private:
     class OrbitalImpl;
