@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include "commands.h"
 
 class OrbitalTerminal
 {
@@ -11,7 +12,7 @@ public:
     ~OrbitalTerminal();
 
     bool IsRunning();
-    std::string GetInput();
+    [[nodiscard]]Command GetCommand();
 private:
     class OrbitalTerminalImpl;
     std::unique_ptr<OrbitalTerminalImpl> mImpl;

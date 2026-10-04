@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCES
     src/orbital/orbital.cpp
     src/orbital/orbital_terminal.cpp
+    src/orbital/commands.cpp
     src/main.cpp
 )
 

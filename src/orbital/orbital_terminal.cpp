@@ -7,13 +7,12 @@ public:
     OrbitalTerminalImpl() = default;
     ~OrbitalTerminalImpl() = default;
 
-    std::string GetInput()
+    Command GetCommand()
     {
         std::string userInput;
         std::cout << "> ";
         std::getline(std::cin, userInput);
-        mRunning = false;
-        return userInput;
+        return parseTerminalCommand(userInput);
     }
 public:
     bool mRunning = true;
@@ -29,7 +28,7 @@ bool OrbitalTerminal::IsRunning()
     return mImpl->mRunning;
 }
 
-std::string OrbitalTerminal::GetInput()
+[[nodiscard]]Command OrbitalTerminal::GetCommand()
 {
-    return mImpl->GetInput();
+    return mImpl->GetCommand();
 }

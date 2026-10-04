@@ -6,17 +6,25 @@
 void printPowerOn()
 {
     Utils::clearScreen();
-    Utils::typeln("Powering on...", Utils::Duration(0.05f));
+    Utils::typeln("Powering on...", Utils::Duration(0.03f));
     Utils::sleep(Utils::Duration(1.0f));
-    Utils::typeln("Initializing Orbital OS...", Utils::Duration(0.05f));
+    Utils::typeln("Starting Orbital OS...", Utils::Duration(0.03f));
     Utils::sleep(Utils::Duration(0.5f));
 }
 
 void printPowerOff()
 {
-    Utils::type("Shutting down...", Utils::Duration(0.07f));
+    Utils::type("Shutting down...", Utils::Duration(0.03f));
     Utils::sleep(Utils::Duration(1.0f));
     Utils::clearScreen();
+}
+
+void printUnknownCommand()
+{
+    Utils::typeln(
+        "Uknown terminal command type 'help' for a list of available commands", 
+        Utils::Duration(0.013f)
+    );
 }
 
 class Orbital::OrbitalImpl
@@ -34,9 +42,13 @@ public:
     {
         OrbitalTerminal orbitalTerm;
 
-        while (orbitalTerm.IsRunning())
+        while (mRunning)
         {
-            std::println("{}", orbitalTerm.GetInput());
+            Command cmd = orbitalTerm.GetCommand();
+            if (cmd == Command::SHUTDOWN) 
+                mRunning = false;
+            else if (cmd == Command::UNKNOWN)
+                printUnknownCommand();
         }
     }
 
@@ -44,6 +56,8 @@ public:
     {
         printPowerOff();
     }
+public:
+    bool mRunning = true;
 };
 
 Orbital::Orbital() : 
